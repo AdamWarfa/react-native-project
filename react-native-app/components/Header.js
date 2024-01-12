@@ -6,7 +6,7 @@ function Header({ streak, hiScore, lives, setLives, setStreak, setHiScore }) {
     <View>
       <Text>LIVES: {lives}</Text>
       <Text>`STREAK: {streak}🔥`</Text>
-      <Text>HISCORE: {hiScore}🍆</Text>{" "}
+      <Text>HISCORE: {hiScore}🍆</Text>
     </View>
   );
 }
