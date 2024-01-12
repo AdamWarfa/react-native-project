@@ -1,23 +1,48 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
 import Header from "../components/Header";
-import InGameSinglePlayer from "./InGameSinglePlayer";
 
 function ChooseMode({ navigation, route }) {
-  const { hiddenWord, hiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives } = route.params;
+  const { hiddenWord, getHiddenWordOnline, hiddenLine, generateGuessLine, streak, setStreak, hiScore, setHiScore, lives, setLives } = route.params;
 
   async function singlePlayerMode() {
-    navigation.navigate("InGameSinglePlayer");
+    try {
+      // Fetch the hidden word
+      const newHiddenWord = await getHiddenWordOnline("https://random-word-api.herokuapp.com/word");
 
-    let hiddenWordSingle = await getHiddenWordOnline("https://random-word-api.herokuapp.com/word");
-    hiddenWord = hiddenWordSingle.toUpperCase();
-    console.log(hiddenWord);
+      // Update state variables
+      setHiScore(Math.max(streak, hiScore));
+      setLives(newHiddenWord.length + 3);
 
-    lives = hiddenWord.length + 3;
-    document.querySelector("#lives-display").textContent = `LIVES: ${lives}`;
+      // Check if newHiddenWord is defined before using it
+      if (newHiddenWord) {
+        generateGuessLine(newHiddenWord);
 
-    generateAlphabet(alphabet);
-    generateGuessLine();
+        // Navigate to "InGameSinglePlayer" screen with the updated hiddenWord
+        navigation.navigate("InGameSinglePlayer", {
+          hiddenWord: newHiddenWord,
+          getHiddenWordOnline: getHiddenWordOnline,
+          hiddenLine: hiddenLine,
+          generateGuessLine: generateGuessLine,
+          streak: streak,
+          setStreak: setStreak,
+          hiScore: hiScore,
+          setHiScore: setHiScore,
+          lives: lives,
+          setLives: setLives,
+        });
+      } else {
+        console.error("Error: Fetched hidden word is undefined");
+        // Handle the error, e.g., show an error message to the user
+      }
+    } catch (error) {
+      console.error("Error fetching hidden word:", hiddenWord, error);
+      // Handle the error, e.g., show an error message to the user
+    }
+  }
+
+  async function fetchAndNavigate() {
+    await singlePlayerMode();
   }
 
   function multiPlayerMode() {
@@ -31,7 +56,7 @@ function ChooseMode({ navigation, route }) {
     <View>
       <Header streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       <Text>Choose Game Mode</Text>
-      <Button title="Generate Random Word" onPress={singlePlayerMode} />
+      <Button title="Generate Random Word" onPress={() => fetchAndNavigate()} />
       <Button title="Choose Secret Word" onPress={multiPlayerMode} />
     </View>
   );

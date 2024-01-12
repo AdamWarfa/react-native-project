@@ -18,40 +18,6 @@ const GameComponent = () => {
     }
   }
 
-  async function getHiddenWordOnline(url) {
-    const response = await fetch(url);
-    const data = await response.json();
-    const dataString = data.toString();
-    return dataString;
-  }
-
-  function setHiddenWord(event) {
-    document.querySelector("#guess-line").innerHTML = "";
-    event.preventDefault();
-    hiddenWord = document.querySelector("#hiddenWordValue").value.toUpperCase();
-    console.log(hiddenWord);
-
-    lives = hiddenWord.length + 3;
-    document.querySelector("#lives-display").textContent = `LIVES: ${lives}`;
-
-    generateGuessLine();
-  }
-
-  function generateGuessLine() {
-    hiddenLine = "_";
-    for (let i = 0; i < hiddenWord.length - 1; i++) {
-      hiddenLine = hiddenLine + "_";
-    }
-    console.log(hiddenLine);
-
-    document.querySelector("#guess-line").insertAdjacentHTML(
-      "beforeend",
-      /*HTML*/ `
-<h1 id="guess-word">${hiddenLine}</h1>
-  `
-    );
-  }
-
   function getKeydownLetter(event) {
     if (alphabet.includes(event.key)) {
       console.log(event.key);
