@@ -12,7 +12,9 @@ function InGameSinglePlayer({ route }) {
       <View>
         <Text>Letters Guessed:</Text>
         <Text>Incorrect Guesses:</Text>
-        <Text>Hidden word is {hiddenWord}</Text>
+        <Text>
+          Hidden word is {hiddenWord} {hiddenWord.length} {hiddenLine.length}
+        </Text>
       </View>
     </View>
   );
