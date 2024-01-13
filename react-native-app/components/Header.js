@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-function Header({ styles, streak, hiScore, lives, setLives, setStreak, setHiScore }) {
+function Header({ styles, streak, hiScore, lives }) {
   return (
     <View>
       <Text style={styles.text}>LIVES: {lives}</Text>

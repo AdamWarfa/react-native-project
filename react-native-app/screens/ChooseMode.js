@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import Header from "../components/Header";
 
 function ChooseMode({ navigation, route }) {
@@ -40,6 +40,7 @@ function ChooseMode({ navigation, route }) {
           styles: styles,
           hiddenWord: newHiddenWord,
           hiddenLine: newHiddenLine,
+          setHiddenLine: setHiddenLine,
           streak: streak,
           hiScore: hiScore,
           lives: lives,
@@ -62,8 +63,12 @@ function ChooseMode({ navigation, route }) {
     <View style={styles.screen}>
       <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       <Text style={styles.text}>Choose Game Mode</Text>
-      <Button title="Generate Random Word" onPress={() => singlePlayerMode()} />
-      <Button title="Choose Secret Word" onPress={multiPlayerMode} />
+      <TouchableHighlight onPress={() => singlePlayerMode()}>
+        <Text style={styles.text}>Generate Random Word</Text>
+      </TouchableHighlight>
+      <TouchableHighlight onPress={() => multiPlayerMode()}>
+        <Text style={styles.text}>Choose Secret Word</Text>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -77,6 +82,19 @@ const styles = StyleSheet.create({
     color: "#a0d8b3",
     fontSize: 20,
     textAlign: "center",
+  },
+  alphabet: {
+    marginTop: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  letter: {
+    backgroundColor: "#222222",
+    padding: 10,
+    alignItems: "center",
+    color: "#a0d8b3",
+    fontSize: 20,
   },
 });
 

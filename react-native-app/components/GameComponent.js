@@ -4,20 +4,6 @@ import { View, Text, TextInput, Button } from "react-native";
 const GameComponent = () => {
   const alphabet = "`abcdefghijklmnopqrstuvwxyz";
 
-  function generateAlphabet(a) {
-    let letterValue;
-    for (let i = 0; i < 26; i++) {
-      letterValue = String.fromCharCode(a.charCodeAt(i) + 1).toUpperCase();
-      console.log(letterValue);
-      document.querySelector("#letters").insertAdjacentHTML(
-        "beforeend",
-        /*HTML*/ `
-<input id="letter-button-${letterValue}" class="letter-buttons" type="button" value=${letterValue} onclick="guessLetter('${letterValue}')">
-`
-      );
-    }
-  }
-
   function getKeydownLetter(event) {
     if (alphabet.includes(event.key)) {
       console.log(event.key);
