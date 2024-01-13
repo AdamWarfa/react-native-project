@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import ChooseMode from "./screens/ChooseMode";
 import InGameSinglePlayer from "./screens/InGameSinglePlayer";
@@ -15,35 +15,9 @@ function App() {
   const [lives, setLives] = useState(0);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="ChooseMode">
-        <Stack.Screen
-          name="ChooseMode"
-          component={ChooseMode}
-          initialParams={{
-            streak: streak,
-            setStreak: setStreak,
-            hiScore: hiScore,
-            setHiScore: setHiScore,
-            lives: lives,
-            setLives: setLives,
-          }}
-        />
-        <Stack.Screen
-          name="InGameSinglePlayer"
-          component={InGameSinglePlayer}
-          style={styles.screen}
-          initialParams={{
-            streak: streak,
-            setStreak: setStreak,
-            hiScore: hiScore,
-            setHiScore: setHiScore,
-            lives: lives,
-            setLives: setLives,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={styles.screen}>
+      <ChooseMode streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
+    </SafeAreaView>
   );
 }
 

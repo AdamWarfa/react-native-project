@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import Header from "../components/Header";
+import InGameSinglePlayer from "./InGameSinglePlayer";
 
-function ChooseMode({ navigation, route }) {
-  const { streak, setStreak, hiScore, setHiScore, lives, setLives } = route.params;
+function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives }) {
+  const [mode, setMode] = useState("");
 
   const [hiddenWord, setHiddenWord] = useState("");
   const [hiddenLine, setHiddenLine] = useState("_");
@@ -36,15 +37,7 @@ function ChooseMode({ navigation, route }) {
         setHiddenLine(newHiddenLine);
 
         // Navigate to "InGameSinglePlayer" screen with the updated hiddenWord
-        navigation.navigate("InGameSinglePlayer", {
-          styles: styles,
-          hiddenWord: newHiddenWord,
-          hiddenLine: newHiddenLine,
-          setHiddenLine: setHiddenLine,
-          streak: streak,
-          hiScore: hiScore,
-          lives: lives,
-        });
+        setMode("singlePlayer");
       });
     } catch (error) {
       console.error("Error fetching hidden word:", hiddenWord, error);
@@ -61,7 +54,6 @@ function ChooseMode({ navigation, route }) {
   }
   return (
     <View style={styles.screen}>
-      <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       <Text style={styles.text}>Choose Game Mode</Text>
       <TouchableHighlight onPress={() => singlePlayerMode()}>
         <Text style={styles.text}>Generate Random Word</Text>
@@ -69,6 +61,22 @@ function ChooseMode({ navigation, route }) {
       <TouchableHighlight onPress={() => multiPlayerMode()}>
         <Text style={styles.text}>Choose Secret Word</Text>
       </TouchableHighlight>
+
+      {mode === "singlePlayer" && (
+        <InGameSinglePlayer
+          styles={styles}
+          hiddenWord={hiddenWord}
+          hiddenLine={hiddenLine}
+          setHiddenLine={setHiddenLine}
+          streak={streak}
+          setStreak={setStreak}
+          hiScore={hiScore}
+          setHiScore={setHiScore}
+          lives={lives}
+          setLives={setLives}
+          setMode={setMode}
+        />
+      )}
     </View>
   );
 }

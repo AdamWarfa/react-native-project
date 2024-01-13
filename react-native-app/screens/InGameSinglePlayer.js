@@ -1,9 +1,22 @@
-import React, { useEffect } from "react";
-import { View, Text, TouchableHighlight } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, TouchableHighlight, ScrollView, RefreshControl } from "react-native";
 import Header from "../components/Header";
 
-function InGameSinglePlayer({ route }) {
-  const { styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives } = route.params;
+function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives, setMode }) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    // Logic to refresh the content (reload hiddenWord, etc.)
+    // For simplicity, let's just reset the hiddenLine to an empty string
+    setHiddenLine("");
+    setLives(0);
+    setMode("");
+
+    // Simulate a delay (you can replace this with your actual async data fetching logic)
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   const alphabet = "`abcdefghijklmnopqrstuvwxy";
   function generateAlphabet(a) {
@@ -37,22 +50,19 @@ function InGameSinglePlayer({ route }) {
         } else {
           updatedLine += hiddenLine[i];
         }
+        setHiddenLine(updatedLine);
       }
-      setHiddenLine(updatedLine);
-
-      // else {
+    } else {
       //   document.querySelector("#letter-button-" + letter).classList.add("tried-letter-wrong");
       //   console.log("Wrong");
-      //   lives = lives - 1;
-      //   document.querySelector("#lives-display").textContent = `LIVES: ${lives}`;
+      setLives(lives - 1);
       //   if (lives == 0) {
       //     gameOver();
-      //   }
     }
   }
 
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       <Text style={styles.text}>{hiddenLine}</Text>
       <View>
@@ -61,7 +71,7 @@ function InGameSinglePlayer({ route }) {
         </Text>
       </View>
       <View style={styles.alphabet}>{alphabet.split("").map(generateAlphabet)}</View>
-    </View>
+    </ScrollView>
   );
 }
 
