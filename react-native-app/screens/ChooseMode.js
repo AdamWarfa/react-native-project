@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableHighlight, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import InGameSinglePlayer from "./InGameSinglePlayer";
 
@@ -57,12 +57,12 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
       {mode !== "singlePlayer" && (
         <SafeAreaView style={styles.homeScreen}>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
-          <TouchableHighlight onPress={() => singlePlayerMode()}>
+          <TouchableWithoutFeedback onPress={() => singlePlayerMode()}>
             <Text style={styles.homeButton}>Generate Random Word</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => multiPlayerMode()}>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => multiPlayerMode()}>
             <Text style={styles.homeButton}>Choose Secret Word</Text>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         </SafeAreaView>
       )}
 
@@ -121,12 +121,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: "center",
     marginTop: -150,
+    marginBottom: 80,
   },
   homeButton: {
     color: "#a0d8b3",
     fontSize: 20,
     textAlign: "center",
-    marginTop: 70,
+    marginTop: 25,
+    marginBottom: 25,
   },
 
   guessedLetters: {

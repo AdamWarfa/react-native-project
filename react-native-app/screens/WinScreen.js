@@ -1,20 +1,20 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
-import ChooseMode from "./ChooseMode";
+import { Text, TouchableHighlight, SafeAreaView } from "react-native";
 
-function WinScreen({ navigation, streak, hiScore, hiddenWord, setStreak, setHiScore }) {
-  function win() {
-    setStreak(streak + 1);
-    if (streak > hiScore) {
-      setHiScore(hiScore + 1);
-    }
+function WinScreen({ styles, hiddenWord, setMode }) {
+  function restartGame() {
+    setMode("");
   }
 
   return (
-    <View style={styles.container}>
-      <Text>YOU WON!</Text>
-      <Text>The correct word was {hiddenWord}</Text>
-      <Button title="Play Again" onPress={() => navigation.navigate("ChooseMode")} />
-    </View>
+    <SafeAreaView style={styles.homeScreen}>
+      <Text style={styles.homeTitle}>YOU WON!</Text>
+      <Text style={styles.homeButton}>The correct word was {hiddenWord}</Text>
+      <TouchableHighlight onPress={restartGame}>
+        <Text style={styles.homeButton}>Play Again</Text>
+      </TouchableHighlight>
+    </SafeAreaView>
   );
 }
+
+export default WinScreen;

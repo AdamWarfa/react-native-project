@@ -2,12 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import ChooseMode from "./screens/ChooseMode";
-import InGameSinglePlayer from "./screens/InGameSinglePlayer";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-
-const Stack = createStackNavigator();
 
 function App() {
   const [streak, setStreak] = useState(0);
