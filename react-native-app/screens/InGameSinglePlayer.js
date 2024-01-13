@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, TouchableHighlight, ScrollView, RefreshControl } from "react-native";
+import { View, Text, TouchableHighlight, TouchableWithoutFeedback, ScrollView, RefreshControl, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 
 function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives, setMode }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [pressedLetters, setPressedLetters] = useState([]);
 
   const onRefresh = useCallback(() => {
     // Logic to refresh the content (reload hiddenWord, etc.)
@@ -21,11 +22,13 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
   const alphabet = "`abcdefghijklmnopqrstuvwxy";
   function generateAlphabet(a) {
     let letterValue = String.fromCharCode(a.charCodeAt() + 1).toUpperCase();
-    console.log(letterValue);
+
     return (
-      <TouchableHighlight key={letterValue} onPress={() => guessLetter(letterValue)} style={{ margin: 10, padding: 10, alignItems: "center" }}>
-        <Text style={styles.letter}>{letterValue}</Text>
-      </TouchableHighlight>
+      <TouchableWithoutFeedback key={letterValue} onPress={() => guessLetter(letterValue)}>
+        <Text key={letterValue} style={pressedLetters.includes(letterValue) ? styles.guessedLetters : styles.letter}>
+          {letterValue}
+        </Text>
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -33,7 +36,7 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
     let currentGuess = letter.toUpperCase();
 
     if (hiddenWord.includes(currentGuess)) {
-      //  document.querySelector("#letter-button-" + letter).classList.add("tried-letter-correct");
+      setPressedLetters([...pressedLetters, letter]);
 
       let guessIndexes = [];
       for (let i = 0; i < hiddenWord.length; i++) {
@@ -65,12 +68,12 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
     <ScrollView style={styles.screen} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       <Text style={styles.text}>{hiddenLine}</Text>
-      <View>
+      <SafeAreaView>
         <Text style={styles.text}>
           Hidden word is {hiddenWord} {hiddenWord.length} {hiddenLine.length}
         </Text>
-      </View>
-      <View style={styles.alphabet}>{alphabet.split("").map(generateAlphabet)}</View>
+      </SafeAreaView>
+      <SafeAreaView style={styles.alphabet}>{alphabet.split("").map(generateAlphabet)}</SafeAreaView>
     </ScrollView>
   );
 }

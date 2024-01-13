@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, TouchableHighlight, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import InGameSinglePlayer from "./InGameSinglePlayer";
 
@@ -53,14 +53,18 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
     document.querySelector("#word-form").addEventListener("submit", setHiddenWord);
   }
   return (
-    <View style={styles.screen}>
-      <Text style={styles.text}>Choose Game Mode</Text>
-      <TouchableHighlight onPress={() => singlePlayerMode()}>
-        <Text style={styles.text}>Generate Random Word</Text>
-      </TouchableHighlight>
-      <TouchableHighlight onPress={() => multiPlayerMode()}>
-        <Text style={styles.text}>Choose Secret Word</Text>
-      </TouchableHighlight>
+    <>
+      {mode !== "singlePlayer" && (
+        <SafeAreaView style={styles.homeScreen}>
+          <Text style={styles.homeTitle}>Choose Game Mode</Text>
+          <TouchableHighlight onPress={() => singlePlayerMode()}>
+            <Text style={styles.homeButton}>Generate Random Word</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => multiPlayerMode()}>
+            <Text style={styles.homeButton}>Choose Secret Word</Text>
+          </TouchableHighlight>
+        </SafeAreaView>
+      )}
 
       {mode === "singlePlayer" && (
         <InGameSinglePlayer
@@ -77,7 +81,7 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
           setMode={setMode}
         />
       )}
-    </View>
+    </>
   );
 }
 
@@ -86,23 +90,53 @@ const styles = StyleSheet.create({
     backgroundColor: "#222222",
     height: "100%",
   },
+
+  homeScreen: {
+    backgroundColor: "#222222",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   text: {
     color: "#a0d8b3",
     fontSize: 20,
     textAlign: "center",
   },
   alphabet: {
-    marginTop: 20,
+    display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    marginTop: 100,
   },
   letter: {
     backgroundColor: "#222222",
-    padding: 10,
+    padding: 18,
     alignItems: "center",
     color: "#a0d8b3",
+    fontSize: 30,
+  },
+  homeTitle: {
+    color: "#a0d8b3",
+    fontSize: 40,
+    textAlign: "center",
+    marginTop: -150,
+  },
+  homeButton: {
+    color: "#a0d8b3",
     fontSize: 20,
+    textAlign: "center",
+    marginTop: 70,
+  },
+
+  guessedLetters: {
+    backgroundColor: "#222222",
+    padding: 18,
+    alignItems: "center",
+    color: "#BBBBBB",
+    fontSize: 30,
+    opacity: 0.5,
+    pointerEvents: "none",
   },
 });
 
