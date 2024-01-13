@@ -32,6 +32,7 @@ function App() {
         <Stack.Screen
           name="InGameSinglePlayer"
           component={InGameSinglePlayer}
+          style={styles.screen}
           initialParams={{
             streak: streak,
             setStreak: setStreak,
@@ -45,5 +46,14 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: "#222222",
+  },
+  text: {
+    color: "#a0d8b3",
+  },
+});
 
 export default App;

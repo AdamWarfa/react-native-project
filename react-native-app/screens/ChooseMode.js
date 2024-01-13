@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
 import Header from "../components/Header";
 
 function ChooseMode({ navigation, route }) {
@@ -37,6 +37,7 @@ function ChooseMode({ navigation, route }) {
 
         // Navigate to "InGameSinglePlayer" screen with the updated hiddenWord
         navigation.navigate("InGameSinglePlayer", {
+          styles: styles,
           hiddenWord: newHiddenWord,
           hiddenLine: newHiddenLine,
           streak: streak,
@@ -58,13 +59,25 @@ function ChooseMode({ navigation, route }) {
     document.querySelector("#word-form").addEventListener("submit", setHiddenWord);
   }
   return (
-    <View>
-      <Header streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
-      <Text>Choose Game Mode</Text>
+    <View style={styles.screen}>
+      <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
+      <Text style={styles.text}>Choose Game Mode</Text>
       <Button title="Generate Random Word" onPress={() => singlePlayerMode()} />
       <Button title="Choose Secret Word" onPress={multiPlayerMode} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: "#222222",
+    height: "100%",
+  },
+  text: {
+    color: "#a0d8b3",
+    fontSize: 20,
+    textAlign: "center",
+  },
+});
 
 export default ChooseMode;
