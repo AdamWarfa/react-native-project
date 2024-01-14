@@ -94,9 +94,10 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
         <ScrollView style={styles.screen} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <Text style={styles.hiddenLine}>{hiddenLine}</Text>
           <SafeAreaView>
-            <Text style={styles.text}>Hidden word is {hiddenWord.length} letters long.</Text>
+            <Text style={{ ...styles.text, marginTop: 10 }}>Hidden word is {hiddenWord.length} letters long</Text>
           </SafeAreaView>
           <SafeAreaView style={styles.alphabet}>{alphabet.split("").map(generateAlphabet)}</SafeAreaView>
+          <Text style={{ ...styles.text, marginTop: 40 }}>Scroll down to go home</Text>
         </ScrollView>
       )}
 

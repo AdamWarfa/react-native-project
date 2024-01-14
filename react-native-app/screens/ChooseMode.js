@@ -56,6 +56,7 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
     <>
       {mode !== "singlePlayer" && (
         <SafeAreaView style={styles.homeScreen}>
+          <Text style={styles.logo}>HANGMAN</Text>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
           <TouchableWithoutFeedback onPress={() => singlePlayerMode()}>
             <Text style={styles.homeButton}>Generate Random Word</Text>
@@ -100,6 +101,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  logo: {
+    color: "#a0d8b3",
+    fontSize: 60,
+    textAlign: "center",
+    marginTop: -150,
+    marginBottom: 250,
+  },
   text: {
     color: "#a0d8b3",
     fontSize: 20,
@@ -121,7 +129,7 @@ const styles = StyleSheet.create({
   },
   homeTitle: {
     color: "#a0d8b3",
-    fontSize: 40,
+    fontSize: 30,
     textAlign: "center",
     marginTop: -150,
     marginBottom: 80,
