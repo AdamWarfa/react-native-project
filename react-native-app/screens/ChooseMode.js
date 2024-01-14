@@ -11,7 +11,9 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
 
   async function getHiddenWordOnline(url) {
     const response = await fetch(url);
+    console.log(response);
     const data = await response.json();
+    console.log(data);
     const dataString = data.toString();
     console.log(dataString.toUpperCase());
     return dataString.toUpperCase();
@@ -22,10 +24,10 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
     return guessLine;
   }
 
-  function singlePlayerMode() {
+  function singlePlayerMode(url) {
     try {
       // Fetch the hidden word
-      getHiddenWordOnline("https://random-word-api.herokuapp.com/word").then((newHiddenWord) => {
+      getHiddenWordOnline(url).then((newHiddenWord) => {
         const newHiddenLine = generateGuessLine(newHiddenWord);
 
         // Update state variables
@@ -58,7 +60,10 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
         <SafeAreaView style={styles.homeScreen}>
           <Text style={styles.logo}>HANGMAN</Text>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
-          <TouchableWithoutFeedback onPress={() => singlePlayerMode()}>
+          <TouchableWithoutFeedback onPress={() => singlePlayerMode("http://placeholder/api/hello")}>
+            <Text style={styles.homeButton}>Daily Challenge</Text>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => singlePlayerMode("https://random-word-api.herokuapp.com/word")}>
             <Text style={styles.homeButton}>Generate Random Word</Text>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => multiPlayerMode()}>
