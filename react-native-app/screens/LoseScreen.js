@@ -9,7 +9,7 @@ function LoseScreen({ styles, hiddenWord, setMode }) {
   return (
     <SafeAreaView style={styles.homeScreen}>
       <Text style={styles.homeTitle}>YOU LOST...</Text>
-      <Text style={styles.homeButton}>The correct word was {hiddenWord}</Text>
+      <Text style={styles.text}>The correct word was {hiddenWord}</Text>
       <TouchableHighlight onPress={restartGame}>
         <Text style={styles.homeButton}>Play Again</Text>
       </TouchableHighlight>

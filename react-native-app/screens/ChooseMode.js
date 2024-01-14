@@ -90,6 +90,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#222222",
     height: "100%",
   },
+  header: {
+    marginTop: 30,
+  },
 
   homeScreen: {
     backgroundColor: "#222222",
@@ -124,21 +127,46 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
   homeButton: {
-    color: "#a0d8b3",
+    color: "#222222",
+    backgroundColor: "#a0d8b3",
     fontSize: 20,
     textAlign: "center",
     marginTop: 25,
     marginBottom: 25,
+    padding: 10,
+    borderRadius: 10,
+    overflow: "hidden",
+    width: 250,
   },
 
   guessedLetters: {
+    backgroundColor: "#555555",
+    padding: 10,
+    margin: 8,
+    alignItems: "center",
+    color: "#EEEEEE",
+    fontSize: 30,
+    borderRadius: 10,
+    overflow: "hidden",
+
+    pointerEvents: "none",
+  },
+
+  wrongLetters: {
     backgroundColor: "#222222",
     padding: 18,
     alignItems: "center",
-    color: "#BBBBBB",
+    color: "#999999",
     fontSize: 30,
     opacity: 0.5,
     pointerEvents: "none",
+  },
+
+  hiddenLine: {
+    color: "#a0d8b3",
+    fontSize: 40,
+    textAlign: "center",
+    marginTop: "20%",
   },
 });
 

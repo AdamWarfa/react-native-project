@@ -8,7 +8,6 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
   const [refreshing, setRefreshing] = useState(false);
   const [pressedRightLetters, setPressedRightLetters] = useState([]);
   const [pressedWrongLetters, setPressedWrongLetters] = useState([]);
-
   const [gameState, setGameState] = useState("playing");
 
   const onRefresh = useCallback(() => {
@@ -40,7 +39,7 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
 
     return (
       <TouchableWithoutFeedback key={letterValue} onPress={() => guessLetter(letterValue)}>
-        <Text key={letterValue} style={pressedRightLetters.includes(letterValue) ? styles.guessedLetters : styles.letter}>
+        <Text key={letterValue} style={pressedRightLetters.includes(letterValue) ? styles.guessedLetters : pressedWrongLetters.includes(letterValue) ? styles.wrongLetters : styles.letter}>
           {letterValue}
         </Text>
       </TouchableWithoutFeedback>
@@ -59,7 +58,6 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
           guessIndexes.push(i);
         }
       }
-      console.log(guessIndexes);
 
       let updatedLine = "";
       for (let i = 0; i < hiddenWord.length; i++) {
@@ -71,8 +69,7 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
         setHiddenLine(updatedLine);
       }
     } else {
-      //   document.querySelector("#letter-button-" + letter).classList.add("tried-letter-wrong");
-      //   console.log("Wrong");
+      setPressedWrongLetters([...pressedWrongLetters, letter]);
       setLives(lives - 1);
     }
   }
@@ -95,11 +92,9 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
       <Header styles={styles} streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
       {gameState === "playing" && (
         <ScrollView style={styles.screen} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-          <Text style={styles.text}>{hiddenLine}</Text>
+          <Text style={styles.hiddenLine}>{hiddenLine}</Text>
           <SafeAreaView>
-            <Text style={styles.text}>
-              Hidden word is {hiddenWord} {hiddenWord.length} {hiddenLine.length}
-            </Text>
+            <Text style={styles.text}>Hidden word is {hiddenWord.length} letters long.</Text>
           </SafeAreaView>
           <SafeAreaView style={styles.alphabet}>{alphabet.split("").map(generateAlphabet)}</SafeAreaView>
         </ScrollView>
