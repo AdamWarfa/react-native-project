@@ -16,10 +16,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <SafeAreaView style={styles.screen}>
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <ChooseMode streak={streak} setStreak={setStreak} hiScore={hiScore} setHiScore={setHiScore} lives={lives} setLives={setLives} />
-        </SafeAreaView>
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
