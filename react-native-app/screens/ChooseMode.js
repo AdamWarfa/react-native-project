@@ -1,13 +1,35 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { signOut } from "firebase/auth";
 import Header from "../components/Header";
+import Login from "./Login";
 import InGameSinglePlayer from "./InGameSinglePlayer";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../firebase";
 
-function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives }) {
+function ChooseMode() {
+  const [streak, setStreak] = useState(0);
+  const [hiScore, setHiScore] = useState(0);
+  const [lives, setLives] = useState(0);
   const [mode, setMode] = useState("");
 
   const [hiddenWord, setHiddenWord] = useState("");
   const [hiddenLine, setHiddenLine] = useState("_");
+
+  const navigation = useNavigation();
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        navigation.navigate("Login");
+        console.log("Sign-out successful.");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+  };
 
   async function getHiddenWordOnline(url) {
     const response = await fetch(url);
@@ -55,9 +77,9 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
     document.querySelector("#word-form").addEventListener("submit", setHiddenWord);
   }
   return (
-    <>
+    <View style={styles.screen}>
       {mode !== "singlePlayer" && (
-        <SafeAreaView style={styles.homeScreen}>
+        <SafeAreaView style={{ ...styles.homeScreen, marginTop: 100 }}>
           <Text style={styles.logo}>HANGMAN</Text>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
           <TouchableWithoutFeedback onPress={() => singlePlayerMode("http://placeholder/api/hello")}>
@@ -68,6 +90,10 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => multiPlayerMode()}>
             <Text style={styles.homeButton}>Choose Secret Word</Text>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback onPress={handleSignOut}>
+            <Text style={{ ...styles.text, marginTop: 30 }}>Sign Out</Text>
           </TouchableWithoutFeedback>
         </SafeAreaView>
       )}
@@ -87,7 +113,7 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
           setMode={setMode}
         />
       )}
-    </>
+    </View>
   );
 }
 
