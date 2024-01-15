@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, SafeAreaView } from "react-native";
+import { signOut } from "firebase/auth";
 import Header from "../components/Header";
+import Login from "./Login";
 import InGameSinglePlayer from "./InGameSinglePlayer";
+import { useNavigation } from "@react-navigation/native";
+import { auth } from "../firebase";
 
 function ChooseMode() {
   const [streak, setStreak] = useState(0);
@@ -11,6 +15,21 @@ function ChooseMode() {
 
   const [hiddenWord, setHiddenWord] = useState("");
   const [hiddenLine, setHiddenLine] = useState("_");
+
+  const navigation = useNavigation();
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        navigation.navigate("Login");
+        console.log("Sign-out successful.");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+  };
 
   async function getHiddenWordOnline(url) {
     const response = await fetch(url);
@@ -60,7 +79,7 @@ function ChooseMode() {
   return (
     <View style={styles.screen}>
       {mode !== "singlePlayer" && (
-        <SafeAreaView style={styles.homeScreen}>
+        <SafeAreaView style={{ ...styles.homeScreen, marginTop: 100 }}>
           <Text style={styles.logo}>HANGMAN</Text>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
           <TouchableWithoutFeedback onPress={() => singlePlayerMode("http://placeholder/api/hello")}>
@@ -71,6 +90,10 @@ function ChooseMode() {
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => multiPlayerMode()}>
             <Text style={styles.homeButton}>Choose Secret Word</Text>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback onPress={handleSignOut}>
+            <Text style={{ ...styles.text, marginTop: 30 }}>Sign Out</Text>
           </TouchableWithoutFeedback>
         </SafeAreaView>
       )}

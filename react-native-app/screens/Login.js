@@ -50,7 +50,7 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.homeScreen}>
-      <SafeAreaView>
+      <SafeAreaView style={{ marginTop: 70 }}>
         <Text style={styles.homeTitle}>Login</Text>
         <TextInput style={styles.input} placeholder="Type Email..." placeholderTextColor="#333" value={email} onChangeText={(text) => setEmail(text)} />
         <TextInput style={{ ...styles.input, marginBottom: "30%" }} placeholder="Type Password..." placeholderTextColor="#333" secureTextEntry={true} value={password} onChangeText={(text) => setPassword(text)} />
