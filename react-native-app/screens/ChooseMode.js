@@ -3,7 +3,10 @@ import { StyleSheet, View, Text, TouchableWithoutFeedback, SafeAreaView } from "
 import Header from "../components/Header";
 import InGameSinglePlayer from "./InGameSinglePlayer";
 
-function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives }) {
+function ChooseMode() {
+  const [streak, setStreak] = useState(0);
+  const [hiScore, setHiScore] = useState(0);
+  const [lives, setLives] = useState(0);
   const [mode, setMode] = useState("");
 
   const [hiddenWord, setHiddenWord] = useState("");
@@ -55,7 +58,7 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
     document.querySelector("#word-form").addEventListener("submit", setHiddenWord);
   }
   return (
-    <>
+    <View style={styles.screen}>
       {mode !== "singlePlayer" && (
         <SafeAreaView style={styles.homeScreen}>
           <Text style={styles.logo}>HANGMAN</Text>
@@ -87,7 +90,7 @@ function ChooseMode({ streak, setStreak, hiScore, setHiScore, lives, setLives })
           setMode={setMode}
         />
       )}
-    </>
+    </View>
   );
 }
 

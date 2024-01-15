@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, KeyboardAvoidingView, SafeAreaView, TouchableOpacity, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebase";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import ChooseMode from "./ChooseMode";
 
@@ -23,9 +24,10 @@ const Login = () => {
   }, []);
 
   const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
+        navigation.navigate("ChooseMode");
+
         const user = response.user;
         console.log(user.email, " is registered");
       })
@@ -35,11 +37,11 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
         const user = response.user;
         console.log(user.email, " is logged in");
+        navigation.navigate("ChooseMode");
       })
       .catch((error) => {
         alert(error);

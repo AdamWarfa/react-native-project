@@ -9,14 +9,11 @@ import Login from "./screens/Login";
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const [streak, setStreak] = useState(0);
-  const [hiScore, setHiScore] = useState(0);
-  const [lives, setLives] = useState(0);
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name="ChooseMode" component={ChooseMode} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
