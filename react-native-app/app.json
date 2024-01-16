@@ -3,6 +3,10 @@
     "name": "react-native-app",
     "slug": "react-native-app",
     "version": "1.0.0",
+    "sdkVersion": "42.0.0",
+    "distribution": {
+      "channel": "default"
+    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,17 +15,17 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adamwarfa.reactnativeapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.adamwarfa.reactnativeapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
