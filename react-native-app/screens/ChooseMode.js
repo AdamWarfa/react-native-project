@@ -82,7 +82,7 @@ function ChooseMode() {
         <SafeAreaView style={{ ...styles.homeScreen, marginTop: 100 }}>
           <Text style={styles.logo}>HANGMAN</Text>
           <Text style={styles.homeTitle}>Choose Game Mode</Text>
-          <TouchableWithoutFeedback onPress={() => singlePlayerMode("http://placeholder/api/hello")}>
+          <TouchableWithoutFeedback onPress={() => singlePlayerMode("http://192.168.1.6:6969/")}>
             <Text style={styles.homeButton}>Daily Challenge</Text>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => singlePlayerMode("https://random-word-api.herokuapp.com/word")}>
