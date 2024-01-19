@@ -3,7 +3,7 @@
     "name": "react-native-app",
     "slug": "react-native-app",
     "version": "1.0.0",
-    "sdkVersion": "42.0.0",
+    "sdkVersion": "49.0.0",
     "distribution": {
       "channel": "default"
     },
