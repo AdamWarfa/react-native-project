@@ -16,6 +16,7 @@ const Login = () => {
       if (user) {
         navigation.navigate("ChooseMode");
         console.log(user.email, " is logged in");
+        console.log(user.uid);
       } else {
         console.log("User is logged out");
       }
@@ -30,6 +31,8 @@ const Login = () => {
 
         const user = response.user;
         console.log(user.email, " is registered");
+
+        // Add user to database
       })
       .catch((error) => {
         alert(error);

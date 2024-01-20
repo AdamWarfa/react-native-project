@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableWithoutFeedback, SafeAreaView } from "react-native";
 import { signOut } from "firebase/auth";
 import Header from "../components/Header";
