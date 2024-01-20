@@ -3,6 +3,7 @@ import { View, Text, TouchableWithoutFeedback, ScrollView, RefreshControl, SafeA
 import Header from "../components/Header";
 import WinScreen from "./WinScreen";
 import LoseScreen from "./LoseScreen";
+import { updateUser } from "../rest.js";
 
 function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives, setMode }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -80,11 +81,31 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
       setHiScore(hiScore + 1);
     }
     setGameState("won");
+
+    // Add streak to database
+    const userObject = {
+      id: user.uid,
+      email: user.email,
+      streak: streak,
+      hiScore: hiScore,
+    };
+
+    updateUser(userObject, user.uid);
   }
 
   function gameOver() {
     setStreak(0);
     setGameState("lost");
+
+    // Add streak to database
+    const userObject = {
+      id: user.uid,
+      email: user.email,
+      streak: streak,
+      hiScore: hiScore,
+    };
+
+    updateUser(userObject);
   }
 
   return (

@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import ChooseMode from "./ChooseMode";
+import { addUserToDB } from "../rest.js";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,14 @@ const Login = () => {
         console.log(user.email, " is registered");
 
         // Add user to database
+        const userObject = {
+          id: user.uid,
+          email: user.email,
+          streak: 0,
+          hiScore: 0,
+        };
+
+        addUserToDB(userObject, "http://192.168.1.6:6969/users");
       })
       .catch((error) => {
         alert(error);
