@@ -5,11 +5,13 @@ import WinScreen from "./WinScreen";
 import LoseScreen from "./LoseScreen";
 import { updateUser } from "../rest.js";
 
-function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives, setMode }) {
+function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, streak, setStreak, hiScore, setHiScore, lives, setLives, setMode, userState }) {
   const [refreshing, setRefreshing] = useState(false);
   const [pressedRightLetters, setPressedRightLetters] = useState([]);
   const [pressedWrongLetters, setPressedWrongLetters] = useState([]);
   const [gameState, setGameState] = useState("playing");
+
+  console.log(userState);
 
   const onRefresh = useCallback(() => {
     setHiddenLine("");
@@ -83,14 +85,10 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
     setGameState("won");
 
     // Add streak to database
-    const userObject = {
-      id: user.uid,
-      email: user.email,
-      streak: streak,
-      hiScore: hiScore,
-    };
 
-    updateUser(userObject, user.uid);
+    const userObject = { ...{ userState }, streak: streak + 1, hiScore: hiScore };
+
+    updateUser(userObject, userState.id);
   }
 
   function gameOver() {
@@ -98,14 +96,9 @@ function InGameSinglePlayer({ styles, hiddenWord, hiddenLine, setHiddenLine, str
     setGameState("lost");
 
     // Add streak to database
-    const userObject = {
-      id: user.uid,
-      email: user.email,
-      streak: streak,
-      hiScore: hiScore,
-    };
+    const userObject = { ...{ userState }, streak: 0, hiScore: hiScore };
 
-    updateUser(userObject);
+    updateUser(userObject, userState.id);
   }
 
   return (

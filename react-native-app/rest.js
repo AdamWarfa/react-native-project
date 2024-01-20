@@ -13,7 +13,7 @@ async function addUserToDB(user, url) {
 }
 
 async function updateUser(user, id) {
-  const response = await fetch(`http://192.168.1.6:6969/users/${}`, {
+  const response = await fetch(`http://192.168.1.6:6969/users/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

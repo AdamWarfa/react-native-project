@@ -7,7 +7,8 @@ import InGameSinglePlayer from "./InGameSinglePlayer";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase";
 
-function ChooseMode() {
+function ChooseMode({ route }) {
+  const { userState } = route.params;
   const [streak, setStreak] = useState(0);
   const [hiScore, setHiScore] = useState(0);
   const [lives, setLives] = useState(0);
@@ -111,6 +112,7 @@ function ChooseMode() {
           lives={lives}
           setLives={setLives}
           setMode={setMode}
+          userState={userState}
         />
       )}
     </View>

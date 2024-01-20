@@ -9,13 +9,21 @@ import { addUserToDB } from "../rest.js";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userState, setUserState] = useState(null);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("ChooseMode");
+        const userObject = {
+          id: user.uid,
+          email: user.email,
+          streak: 0,
+          hiScore: 0,
+        };
+        setUserState(userObject);
+        navigation.navigate("ChooseMode", { userState: userState });
         console.log(user.email, " is logged in");
         console.log(user.uid);
       } else {
@@ -28,8 +36,6 @@ const Login = () => {
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
-        navigation.navigate("ChooseMode");
-
         const user = response.user;
         console.log(user.email, " is registered");
 
@@ -42,6 +48,8 @@ const Login = () => {
         };
 
         addUserToDB(userObject, "http://192.168.1.6:6969/users");
+        setUserState(userObject);
+        navigation.navigate("ChooseMode", { userState: userState });
       })
       .catch((error) => {
         alert(error);
@@ -52,8 +60,18 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
         const user = response.user;
-        console.log(user.email, " is logged in");
-        navigation.navigate("ChooseMode");
+
+        const userObject = {
+          id: user.uid,
+          email: user.email,
+          streak: 0,
+          hiScore: 0,
+        };
+
+        console.log(userState.email, " is logged in");
+        setUserState(userObject);
+
+        navigation.navigate("ChooseMode", { userState: userState });
       })
       .catch((error) => {
         alert(error);
